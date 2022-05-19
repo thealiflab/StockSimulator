@@ -9,7 +9,7 @@ class GameUI:
     def __init__(self, game_brain: GameBrain):
         self.brain = game_brain
         self.window = tkinter.Tk()
-        self.window.title("Stock Simulator - Rich in 10 Days")
+        self.window.title("Stock Simulator - Rich in Days")
         self.window.config(padx=20, pady=20, bg="white")
         self.window.minsize(width=450, height=471)
 
@@ -26,14 +26,14 @@ class GameUI:
         self.high_score_label = tkinter.Label(text="1", font=(FONT, 15), bg="white")
         self.high_score_label.place(x=230, y=40)
 
-        # Current Stock Value label
-        self.current_stock_label = tkinter.Label(text="Current Per Stock Price:")
+        # Current Stock label
+        self.current_stock_label = tkinter.Label(text="Current Stock Price:")
         self.current_stock_label.config(font=(FONT, 13), bg="white")
-        self.current_stock_label.place(x=110, y=80, width=225, height=79)
+        self.current_stock_label.place(x=110, y=90, width=225, height=70)
 
         # Current Stock Value label
-        self.per_price_label = tkinter.Label(text="", bg="white")
-        self.per_price_label.place(x=170, y=180, width=70, height=25)
+        self.stock_price_value = tkinter.Label(text="", bg="white")
+        self.stock_price_value.place(x=180, y=180, width=70, height=25)
 
         # Sell button
         self.sell_button = tkinter.Button(text="Sell ⬆", bg="#F55353", fg="white", command=self.sell_button_pressed)
@@ -82,7 +82,7 @@ class GameUI:
         self.update_day_value()
 
         self.current_stock_text = self.brain.generate_current_per_stock_price()
-        self.current_stock_label.config(text=self.current_stock_text, fg="#4D77FF", font=(FONT, 25))
+        self.stock_price_value.config(text=self.current_stock_text, fg="#4D77FF", font=(FONT, 25))
 
     def buy_button_pressed(self):
         self.update_day_value()
