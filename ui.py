@@ -13,13 +13,18 @@ class GameUI:
         self.window.config(padx=20, pady=20, bg="white")
         self.window.minsize(width=450, height=471)
 
-        self.current_stock_text = 0
+        self.current_stock_text: int = 0
         self.user_input_data: int = 0
+        self.day_value: int = 0
 
-        # Day Indicator
-        self.high_score_label = tkinter.Label(text="Day 1")
+        # Day label
+        self.high_score_label = tkinter.Label(text="Day")
         self.high_score_label.config(font=(FONT, 15), bg="white")
-        self.high_score_label.place(x=170, y=40, width=98, height=30)
+        self.high_score_label.place(x=160, y=40, width=98, height=30)
+
+        # Day Value label
+        self.high_score_label = tkinter.Label(text="1", font=(FONT, 15), bg="white")
+        self.high_score_label.place(x=230, y=40)
 
         # Current Stock Value label
         self.current_stock_label = tkinter.Label(text="Current Per Stock Price:")
@@ -58,11 +63,14 @@ class GameUI:
         self.stock_hold_value_label = tkinter.Label(text="0", font=(FONT, 13), bg="white")
         self.stock_hold_value_label.place(x=160, y=392)
 
+        # To generate first random current per stock value
         self.day_button_pressed()
 
         self.window.mainloop()
 
     def sell_button_pressed(self):
+        self.update_day_value()
+
         bid_text = self.user_input_popup()
         got_balance_stock_tuple = self.brain.sell_stock(
             sell_number=bid_text,
@@ -71,16 +79,24 @@ class GameUI:
         self.update_balance_stock_value_label(got_balance_stock_tuple)
 
     def day_button_pressed(self):
+        self.update_day_value()
+
         self.current_stock_text = self.brain.generate_current_per_stock_price()
         self.current_stock_label.config(text=self.current_stock_text, fg="#4D77FF", font=(FONT, 25))
 
     def buy_button_pressed(self):
+        self.update_day_value()
+
         bid_text = self.user_input_popup()
         got_balance_stock_tuple = self.brain.buy_stock(
             buy_number=bid_text,
             current_per_stock_price=self.current_stock_text
         )
         self.update_balance_stock_value_label(got_balance_stock_tuple)
+
+    def update_day_value(self):
+        self.day_value += 1
+        self.high_score_label.config(text=self.day_value)
 
     def update_balance_stock_value_label(self, balance_stock_tuple: tuple):
         if balance_stock_tuple == (0, 0):
