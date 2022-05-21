@@ -115,6 +115,11 @@ class GameUI:
         )
 
         if self.user_input_data is not None:
-            return self.user_input_data
+            if self.user_input_data >= 0:
+                return self.user_input_data
+            else:
+                return self.user_input_popup()
         else:
-            self.user_input_popup()
+            return 0
+
+
