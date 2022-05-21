@@ -35,4 +35,3 @@ class GameBrain:
         else:
             balance_stock_tuple = (0, 0)
             return balance_stock_tuple
-

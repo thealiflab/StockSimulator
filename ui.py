@@ -121,5 +121,3 @@ class GameUI:
                 return self.user_input_popup()
         else:
             return 0
-
-
