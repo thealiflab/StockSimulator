@@ -10,7 +10,7 @@ FONT = "arial"
 
 x_list = [1]
 y_list = [1]
-drawn = 0
+day = 0
 
 
 class GameUI:
@@ -35,11 +35,7 @@ class GameUI:
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(expand=True)
 
-        # --------------- Matplotlib Graph End--------------- #
-
-        # Day Value label
-        # self.high_score_label = tkinter.Label(text="1", font=(FONT, 15), bg="white")
-        # self.high_score_label.place(x=230, y=40)
+        # --------------- UI Elements --------------- #
 
         # Current Stock label
         self.current_stock_label = tkinter.Label(text="💰 Current Stock Price 💰")
@@ -86,23 +82,22 @@ class GameUI:
     def axis_draw(self):
         self.ax.clear()
         self.ax.set(xlabel='', ylabel='Price')
-        global drawn
-        drawn += 1
+        global day
+        day += 1
 
         self.ax.xaxis.set_major_locator(MaxNLocator(integer=True))
         self.ax.yaxis.set_major_locator(MaxNLocator(integer=True))
 
         self.ax.plot(x_list, y_list, "green")
 
-        if drawn > 11:
-            self.ax.set_xticks(range(0, drawn))
+        if day > 11:
+            self.ax.set_xticks(range(0, day))
         else:
             self.ax.set_xticks(range(0, 11))
 
         self.ax.set_yticks(range(0, 101, 10))
 
     def sell_button_pressed(self):
-
         bid_text = self.user_input_popup()
         got_balance_stock_tuple = self.brain.sell_stock(
             sell_number=bid_text,
@@ -111,11 +106,10 @@ class GameUI:
         self.update_balance_stock_value_label(got_balance_stock_tuple)
 
     def day_button_pressed(self):
-
+        # ------------------ UI label & Data get Section ------------------
         self.current_stock_value_text = self.brain.generate_current_per_stock_price()
         print(self.current_stock_value_text)
         self.stock_price_value.config(text=self.current_stock_value_text, fg="#4D77FF", font=(FONT, 18))
-
         # ------------------ Graph Section ------------------
         x_list.append(x_list[-1] + 1)
         y_list.append(self.current_stock_value_text)
@@ -128,7 +122,6 @@ class GameUI:
         print(y_list)
 
     def buy_button_pressed(self):
-
         bid_text = self.user_input_popup()
         got_balance_stock_tuple = self.brain.buy_stock(
             buy_number=bid_text,
