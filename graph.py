@@ -8,23 +8,33 @@ window = tkinter.Tk()
 window.title("Matplotlib in Tkinter")
 window.minsize(640, 400)
 
-
 x_list = [1]
 y_list = [1]
+drawn = 0
+
 
 def axis_draw():
     ax.clear()
+    ax.set(xlabel='Day', ylabel='Price')
+    global drawn
+    drawn += 1
 
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     ax.yaxis.set_major_locator(MaxNLocator(integer=True))
-    ax.plot(x_list, y_list)
 
-    ax.set_xticks(range(0, 11))
-    ax.set_yticks(range(0, 11))
+    ax.plot(x_list, y_list, "green")
+
+    if drawn > 11:
+        ax.set_xticks(range(0, drawn))
+    else:
+        ax.set_xticks(range(0, 11))
+
+    ax.set_yticks(range(0, 101, 5))
+
 
 def graph_extend():
-    x_list.append(x_list[-1]+1)
-    y_list.append(random.randint(1, 10))
+    x_list.append(x_list[-1] + 1)
+    y_list.append(random.randint(1, 100))
 
     axis_draw()
 
@@ -36,7 +46,6 @@ def graph_extend():
 
 fig = Figure(figsize=(5, 5), dpi=100)
 ax = fig.add_subplot(1, 1, 1)
-ax.set(xlabel='Day', ylabel='Price')
 
 axis_draw()
 
