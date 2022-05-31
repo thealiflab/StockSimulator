@@ -18,7 +18,7 @@ class GameUI:
         self.brain = game_brain
         self.window = tkinter.Tk()
         self.window.title("Stock Simulator - Rich in Days")
-        self.window.config(padx=0, pady=0, bg="white")
+        self.window.config(padx=20, pady=0, bg="white")
         self.window.minsize(width=500, height=660)
 
         self.current_stock_value_text: int = 0
